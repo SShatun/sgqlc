@@ -1452,6 +1452,8 @@ class Union(BaseTypeWithTypename, metaclass=UnionMeta):
     >>> data = {'__typename': 'TypeUnknown', 'v': 123}
     >>> TypeU(data) # auto-generates empty types
     TypeUnknown()
+    >>> data = None
+    >>> TypeU(data)
 
     '''
 
@@ -1459,6 +1461,9 @@ class Union(BaseTypeWithTypename, metaclass=UnionMeta):
     __types__ = ()
 
     def __new__(cls, json_data, selection_list=None):
+        if json_data is None:
+            return
+
         type_name = json_data.get('__typename')
         if not type_name:
             t = UnknownType
