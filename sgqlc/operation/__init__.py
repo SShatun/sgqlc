@@ -1227,7 +1227,7 @@ class Selection:
         required = {k for k, v in self.__field__.args.items()
                     if v.type.__name__.endswith('!')}
 
-        if not set(self.__args__) >= required:
+        if required and not self.__args__:
             return ''
 
         query = ''
